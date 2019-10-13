@@ -1,0 +1,27 @@
+---
+- name: create elb
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: creating elb
+    ec2_elb_lb:
+    name: myelb
+    state: present
+    region: eu-west-2
+    cross_az_load_balancing: yes
+    listeners:
+      - protocol: http
+        load_balance_port: 80
+        instance_port: 80
+    tags:
+      name: myelb
+    security_group_ids: sg-205bdc4e
+    zones: eu-west-2a
+    health_check:
+      ping_protocol: http
+      ping_port: 80
+      ping_path: "/index.html"
+      response_timeout: 5
+      interval: 30
+      unhealthy_threshold: 2
+      healthy_threshold: 2

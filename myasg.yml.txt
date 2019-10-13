@@ -1,0 +1,20 @@
+---
+- name: create auto scaling group
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: create auto scaling group
+    ec2_asg:
+      name: myasg
+      region: eu-west-2
+      load_balancers: myelb
+      availability_zones: ['eu-west-2a']
+      launch_config_name: "{{ launch_config }}"
+      min_size: 1
+      max_size: 3
+      desired_capacity: 1
+      replace_all_instances: yes
+      vpc_zone_identifier: ['subnet-8c6d14e5']
+      tags:
+        - type: my_web_server
+      wait_for_instances: yes

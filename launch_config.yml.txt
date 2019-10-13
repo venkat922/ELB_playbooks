@@ -1,0 +1,14 @@
+---
+- name: create ec2 launch config
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: ec2 lc create
+    ec2_lc:
+      name: "{{ launch_config }}"
+      image_id: ami-00a1270ce1e007c27
+      instance_type: t2.micro
+      key_name: webserver
+      security_group: ['default']
+      region: eu-west-2
+      user_data_path: /root/user_data
